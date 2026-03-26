@@ -382,6 +382,13 @@ def main():
     app.add_handler(MessageHandler(filters.StatusUpdate.WEB_APP_DATA, handle_webapp_data))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_text))
     logger.info(f"🤖 Бот запущен | Admin: {ADMIN_ID}")
+    
+    import asyncio
+    try:
+        asyncio.get_running_loop()
+    except RuntimeError:
+        asyncio.set_event_loop(asyncio.new_event_loop())
+        
     app.run_polling(drop_pending_updates=True)
 
 if __name__ == "__main__":
